@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Specliast;
+use App\Entity\Specialist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Specliast>
+ * @extends ServiceEntityRepository<Specialist>
  *
- * @method Specliast|null find($id, $lockMode = null, $lockVersion = null)
- * @method Specliast|null findOneBy(array $criteria, array $orderBy = null)
- * @method Specliast[]    findAll()
- * @method Specliast[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Specialist|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Specialist|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Specialist[]    findAll()
+ * @method Specialist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SpecliastRepository extends ServiceEntityRepository
+class SpecialistRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Specliast::class);
+        parent::__construct($registry, Specialist::class);
     }
 
-    public function save(Specliast $entity, bool $flush = false): void
+    public function save(Specialist $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class SpecliastRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Specliast $entity, bool $flush = false): void
+    public function remove(Specialist $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -39,28 +39,28 @@ class SpecliastRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Specliast[] Returns an array of Specliast objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Specialist[] Returns an array of Specialist objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('s.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Specliast
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Specialist
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
