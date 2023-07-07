@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	{% form_theme lists_question 'bootstrap_4_layout.html.twig' %}
+	<div class="container">
+		<h1>
+			Indiquez vos informations
+		</h1><br>
+		{{ form_start(lists_question, {'attr': {'novalidate': 'novalidate'}})}}
+		{{ form_label(lists_question.nom)}}
+		{{ form_widget(lists_question.nom)}}
+		{{ form_errors(lists_question.nom)}}
+		{{ form_row(lists_question.prenom)}}
+		{{ form_row(lists_question.niveau)}}
+		{{ form_row(lists_question.pathologie)}}
+		{{ form_row(lists_question.age_maladie)}}
+		{{ form_row(lists_question.quel_age)}}
+		{{ form_row(lists_question.vivre_quatidien)}}
+		{{ form_end(lists_question)}}
+	</div>
+{% endblock %}

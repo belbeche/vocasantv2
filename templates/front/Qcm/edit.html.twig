@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	{% form_theme edit_users 'bootstrap_4_layout.html.twig' %}
+	<div class="container">
+		<h1>
+			Modifier vos informations
+		</h1><br>
+		{{ form_start(edit_users, {'attr': {'novalidate': 'novalidate'}})}}
+		{{ form_widget(edit_users)}}
+		<button type="submit" class="btn btn-info">Valider</button>
+		{{ form_end(edit_users)}}
+	</div>
+{% endblock %}

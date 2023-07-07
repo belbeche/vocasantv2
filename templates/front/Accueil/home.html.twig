@@ -5,5 +5,20 @@
 
 
 {% block content %}
-	Coucou
+	<div class="index d-flex align-items-center justify-content-center vh-100">
+		<div class="text-center p-3">
+			<div class="mb-5 pb-5">
+				<a href="#" class="gap-2 text-white text-center">
+					<div class="rounded-pill bg-white p-3 d-inline-block mb-4">
+						<img src="img/logo.png" alt="" class="img-fluid logo">
+					</div>
+					<h1 class="mb-0 text-black">VocaSant</h1>
+					<div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-5">
+						<a href="{{ path('app_register')}}" class="btn btn-primary btn-lg px-4 gap-3">Inscription</a>
+						<a href="{{ path('app_login')}}" class="btn btn-outline-secondary btn-lg px-4">Connexion</a>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}
