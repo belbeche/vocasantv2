@@ -13,9 +13,15 @@
 						<img src="img/logo.png" alt="" class="img-fluid logo">
 					</div>
 					<h1 class="mb-0 text-black">VocaSant</h1>
-					<a href="#introduction" class="btn btn-warning">
-						<small>Voir introduction</small>
-					</a>
+					{% if not app.user %}
+						<a href="#introduction" class="btn btn-warning">
+							<small>Voir introduction</small>
+						</a>
+					{% else %}
+						<a href="{{ path('home_exercices', {'id': app.user.id })}}" class="btn btn-info">
+							<small>Voir statistiques</small>
+						</a>
+					{% endif %}
 					<p></p>
 				</a>
 			</div>
@@ -27,8 +33,13 @@
 		<p class="fs-5 col-md-8">VocaSant utilise des études médicales pour évaluer et suivre l'autonomie des individus, offrant ainsi des informations précieuses pour le suivi médical et l'amélioration de la qualité de vie.</p>
 
 		<div class="mb-5">
-			<a href="{{ path('app_register')}}" class="btn btn-primary btn-lg px-4 gap-3">Inscription</a>
-			<a href="{{ path('app_login')}}" class="btn btn-secondary btn-lg px-4 gap-3">Connexion</a>
+			{% if not app.user %}
+				<a href="{{ path('app_register')}}" class="btn btn-primary btn-lg px-4 gap-3">Inscription</a>
+				<a href="{{ path('app_login')}}" class="btn btn-secondary btn-lg px-4 gap-3">Connexion</a>
+			{% else %}
+				<p>vous êtes bien connecté sous
+					{{ app.user.email }}</p>
+			{% endif %}
 		</div>
 
 		<hr class="col-3 col-md-2 mb-5">
