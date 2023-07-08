@@ -13,12 +13,76 @@
 						<img src="img/logo.png" alt="" class="img-fluid logo">
 					</div>
 					<h1 class="mb-0 text-black">VocaSant</h1>
-					<div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-5">
-						<a href="{{ path('app_register')}}" class="btn btn-primary btn-lg px-4 gap-3">Inscription</a>
-						<a href="{{ path('app_login')}}" class="btn btn-outline-secondary btn-lg px-4">Connexion</a>
-					</div>
+					<a href="#introduction" class="btn btn-warning">
+						<small>Voir introduction</small>
+					</a>
+					<p></p>
 				</a>
 			</div>
 		</div>
 	</div>
+
+	<main class="px-5" id="introduction">
+		<h1 class="text-body-emphasis">Démarrer avec Vocasant</h1>
+		<p class="fs-5 col-md-8">VocaSant utilise des études médicales pour évaluer et suivre l'autonomie des individus, offrant ainsi des informations précieuses pour le suivi médical et l'amélioration de la qualité de vie.</p>
+
+		<div class="mb-5">
+			<a href="{{ path('app_register')}}" class="btn btn-primary btn-lg px-4 gap-3">Inscription</a>
+			<a href="{{ path('app_login')}}" class="btn btn-secondary btn-lg px-4 gap-3">Connexion</a>
+		</div>
+
+		<hr class="col-3 col-md-2 mb-5">
+
+		<div class="row g-5">
+			<div class="col-md-6">
+				<h2 class="text-body-emphasis">Projets de démarrage</h2>
+				<p>Mon objectif est de fournir aux individus un moyen fiable et facile de mesurer leur autonomie, tout en offrant aux professionnels de la santé des outils efficaces pour évaluer les progrès de leurs patients..</p>
+				<ul class="list-unstyled ps-0">
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Évaluation de l'autonomie : VocaSant permet aux utilisateurs de mesurer leur taux
+					</li>
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Suivi personnalisé : Les utilisateurs peuvent suivre leurs progrès au fil du temps et visualiser des graphiques représentant leur évolution.
+					</li>
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Recommandations personnalisées : VocaSant fournit des recommandations adaptées à chaque utilisateur pour améliorer leur autonomie et leur bien-être.
+					</li>
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Partage des données : Les utilisateurs ont la possibilité de partager leurs données avec leurs professionnels de santé pour un suivi médical plus précis et une meilleure prise en charge.
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-md-6">
+				<h2 class="text-body-emphasis">Guides</h2>
+				<p>Read more detailed instructions and documentation on using or contributing to Bootstrap.</p>
+				<ul class="list-unstyled ps-0">
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Avantages de VocaSant
+					</li>
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Facilité d'utilisation : VocaSant est une solution conviviale avec une interface intuitive qui permet à chacun de l'utiliser facilement, même sans compétences techniques particulières.
+					</li>
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Suivi en temps réel : Les utilisateurs peuvent accéder à leurs résultats et à leurs statistiques en temps réel, ce qui leur permet de suivre leurs progrès de manière efficace.
+					</li>
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Confidentialité et sécurité : J' accorde une grande importance à la confidentialité des données. Toutes les informations des utilisateurs sont open source et traitées conformément aux normes de protection des données.
+					</li>
+					<li>
+						<svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+						Accessibilité : VocaSant est accessible depuis différents appareils, tels que les smartphones, les tablettes et les ordinateurs, permettant aux utilisateurs de l'utiliser à tout moment et n'importe où.
+					</li>
+				</ul>
+			</div>
+		</div>
+	</main>
 {% endblock %}
