@@ -4,21 +4,25 @@
 {% endblock %}
 
 {% block content %}
-	{% for flash_error in app.flashes('verify_email_error') %}
-		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-	{% endfor %}
+	{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
 
-	<h1>Vous êtes sur le point de commencé votre parcours</h1>
+	<div class="container">
+		{% for flash_error in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
 
-	{{ form_errors(registrationForm) }}
+		<h1>Vous êtes sur le point de commencé votre parcours</h1>
 
-	{{ form_start(registrationForm) }}
-	{{ form_row(registrationForm.email) }}
-	{{ form_row(registrationForm.plainPassword, {
+		{{ form_errors(registrationForm) }}
+
+		{{ form_start(registrationForm) }}
+		{{ form_row(registrationForm.email) }}
+		{{ form_row(registrationForm.plainPassword, {
             label: 'Mot de passe'
         }) }}
-	{{ form_row(registrationForm.agreeTerms) }}
+		{{ form_row(registrationForm.agreeTerms) }}
 
-	<button type="submit" class="btn">Suivant</button>
-	{{ form_end(registrationForm) }}
+		<button type="submit" class="btn">Suivant</button>
+		{{ form_end(registrationForm) }}
+	</div>
 {% endblock %}
