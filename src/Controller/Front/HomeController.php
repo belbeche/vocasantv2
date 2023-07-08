@@ -19,7 +19,7 @@ class HomeController extends AbstractController
         return $this->render('front/Accueil/home.html.twig');
     }
 
-    #[Route('/nouveau/{id}', 'home_statistiques', methods: ['POST'])]
+    #[Route('/nouveau/{id}', 'home_statistiques', methods: ['GET','POST'])]
      public function getNew(Request $request, EntityManagerInterface $entityManager, $id)
      {
          $lists_question = $entityManager->getRepository(Exo::class)->find($id);
