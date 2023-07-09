@@ -43,7 +43,7 @@
 				</div>
 			</div>
 			<div class="col-xs-1 form-group">
-				<h1>degré d'autonomie</h1><br>
+				<h1>Degré d'autonomie</h1><br>
 				{% if users_stats.niveau <= 20 %}
 					<span>Niveau 1 : la personne ne respecte pas les consignes, elle commence plusieurs choses , les laisse en plan , ne clôture pas.</span>
 				{% elseif users_stats.niveau < 41 %}
@@ -60,10 +60,10 @@
 					:
 					{{ users_stats.vivrequatidien }}
 				</span><br><hr>
-				{# <a class="btn btn-warning btn-lg" href="{{ path('questions_reponses') }}" role="button">Test en ligne</a>
-																																																																																																	        <a class="btn btn-info btn-lg" href="http://chatvocasant/">Assistance en ligne
-																																																																																																	        </a><br><hr>
-																																																																																																	        <a class="btn btn-info btn-lg" onclick="alert('En construction\n');">A propos</a> #}
+				<h1 class="text-center">
+					<strong>APPLICATION EN CONSTRUCTION</strong>
+				</h1>
+				<p>Sur cette page, vous pouvez configurer des alertes et des événements en fonction de votre degré d'autonomie. Ces alertes vous aideront à anticiper les situations et à demander de l'aide si nécessaire. N'hésitez pas à mettre à jour vos informations si votre degré d'autonomie évolue.</p>
 			</div>
 		</div>
 	</div>
