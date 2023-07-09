@@ -6,16 +6,47 @@
 		<h1>
 			Indiquez vos informations
 		</h1><br>
-		{{ form_start(lists_question, {'attr': {'novalidate': 'novalidate'}})}}
-		{{ form_label(lists_question.nom)}}
-		{{ form_widget(lists_question.nom)}}
-		{{ form_errors(lists_question.nom)}}
-		{{ form_row(lists_question.prenom)}}
-		{{ form_row(lists_question.niveau)}}
-		{{ form_row(lists_question.pathologie)}}
-		{{ form_row(lists_question.age_maladie)}}
-		{{ form_row(lists_question.quel_age)}}
-		{{ form_row(lists_question.vivre_quatidien)}}
-		{{ form_end(lists_question)}}
+		<p>
+			Une fois tous les champs remplis, cliquez sur le bouton "Suivant" pour passer à l'étape suivante. Nous vous remercions de votre participation et nous nous engageons à vous fournir des recommandations personnalisées pour améliorer votre qualité de vie au quotidien.
+		</p>
+		<div class="Container px-2">
+			{{ form_start(lists_question, {'attr': {'novalidate': 'novalidate'}})}}
+			{{ form_label(lists_question.nom)}}
+			{{ form_widget(lists_question.nom)}}
+			{{ form_errors(lists_question.nom)}}
+			<p>
+				Veuillez saisir votre nom complet.
+			</p>
+			{{ form_row(lists_question.prenom)}}
+			<p>
+				Veuillez saisir votre prénom courant.
+			</p>
+			{{ form_row(lists_question.niveau)}}
+			<p>
+				Veuillez choisir parmis la liste votre niveau au quatidien.
+			</p>
+			{{ form_row(lists_question.pathologie)}}
+			<p>
+				Si on vous a reconnu une pathologie, inscrivez là ici
+			</p>
+			{{ form_row(lists_question.age_maladie)}}
+			<p>
+				A quel age la maladie à commencé
+			</p>
+			{{ form_row(lists_question.quel_age)}}
+			<p>
+				Votre age.
+			</p>
+			{{ form_row(lists_question.vivre_quatidien)}}
+			<p>
+				Veuillez choisir parmis la liste votre situation actuelle.
+			</p>
+
+			{{form_row(lists_question.suivant)}}
+			<p>
+				Ce bouton vous permettra de passer à l'étape suivante une fois que vous avez rempli les informations requises.
+			</p>
+			{{ form_end(lists_question)}}
+		</div>
 	</div>
 {% endblock %}

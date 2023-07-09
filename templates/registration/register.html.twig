@@ -5,25 +5,35 @@
 
 {% block content %}
 	{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
-
+	<img class="d-block mx-auto mb-4" src="{{ asset('img/hospital.svg')}}" alt="" width="72" height="57">
 	<div class="container">
 		{% for flash_error in app.flashes('verify_email_error') %}
 			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 		{% endfor %}
 
-		<h1>Vous êtes sur le point de commencer votre parcours.</h1>
-
+		<h1 class="display-5 fw-bold text-body-emphasis">Félicitations ! Vous êtes sur le point d'entamer votre parcours vers une meilleure autonomie.</h1>
+		<p class="text-body-emphasis">
+			N'attendez plus, inscrivez-vous dès maintenant et laissez Vocasant vous guider vers une meilleure qualité de vie et une plus grande indépendance.
+		</p>
 		{{ form_errors(registrationForm) }}
 
 		{{ form_start(registrationForm) }}
-		{{ form_row(registrationForm.email) }}
+		{{ form_row(registrationForm.email, {
+			label: 'Inscrivez votre email personnel'
+	}) }}
+		<p>
+			Votre email doit être valide.
+		</p>
 		{{ form_row(registrationForm.plainPassword, {
-            label: 'Mot de passe'
+            label: 'Mot de passe pour l\'application'
         }) }}
-		{{ form_row(registrationForm.agreeTerms, {
+		<p>
+			Votre mot de passe doit contenir 6 caractères au minimum. 
+		</p>
+	{{ form_row(registrationForm.agreeTerms, {
       label: 'En vous inscrivant, vous acceptez nos conditions d\'utilisations du produit.'}) }}
 
-		<button type="submit" class="btn">Suivant</button>
+		<button type="submit" class="btn">Etape suivante</button>
 		{{ form_end(registrationForm) }}
 	</div>
 {% endblock %}

@@ -36,13 +36,13 @@ class HomeController extends AbstractController
                      'De temps en temps' => '60',
                      'Pas du tout' => '80'
                  ],
-                 'label' => 'Pour vous est-ce difficile de vivre quotidiennement',
+                 'label' => 'Pour vous est-ce difficile de vivre quotidiennement ?',
              ])
              ->add('pathologie', TextType::class, [
                  'label' => 'Maladie(si existante)',
              ])
              ->add('age_maladie', TextType::class, [
-                 'label' => 'A quel âge la maladie à été découverte ?',
+                 'label' => '(Faculatatif)',
              ])
              ->add('quel_age', TextType::class, [
                  'label' => 'Votre age',
@@ -82,35 +82,40 @@ class HomeController extends AbstractController
         $lists_question->setCreatedAt(new \DateTimeImmutable());
 
         $form = $this->createFormBuilder($lists_question)
-            ->add('nom', TextType::class)
-            ->add('prenom', TextType::class)
-            ->add('niveau', ChoiceType::class, [
-                'choices' => [
-                    'Enormement' => '20',
-                    'Beaucoup' => '40',
-                    'De temps en temps' => '60',
-                    'Pas du tout' => '80'
-                ],
-                'label' => 'Pour vous est-ce difficile de vivre quotidiennement',
-            ])
-            ->add('pathologie', TextType::class, [
-                'label' => 'Maladie(si existante)',
-            ])
-            ->add('age_maladie', TextType::class, [
-                'label' => 'A quel âge la maladie a été découverte ?',
-            ])
-            ->add('quel_age', TextType::class, [
-                'label' => 'Votre age',
-            ])
-            ->add('vivre_quatidien', ChoiceType::class, [
-                'choices' => [
-                    'Seul' => 'Laisser seul le malade vivre chez lui ',
-                    'En Famille' => 'Vivre avec lui',
-                    'Etablissement spécialisé' => 'Le placer dans un établissement',
-                ],
-                'label' => 'Comment vivez-vous ?',
-            ])
-            ->getForm();
+        ->add('nom', TextType::class)
+        ->add('prenom', TextType::class)
+        ->add('niveau', ChoiceType::class, [
+            'choices' => [
+                'Enormement' => '20',
+                'Beaucoup' => '40',
+                'De temps en temps' => '60',
+                'Pas du tout' => '80'
+            ],
+            'label' => 'Pour vous est-ce difficile de vivre quotidiennement ?',
+        ])
+        ->add('pathologie', TextType::class, [
+            'label' => 'Maladie(si existante)',
+        ])
+        ->add('age_maladie', TextType::class, [
+            'label' => '(Faculatatif)',
+        ])
+        ->add('quel_age', TextType::class, [
+            'label' => 'Votre age',
+        ])
+        ->add('vivre_quatidien', ChoiceType::class, [
+            'choices' => [
+                'Seul' => 'Laisser seul le malade vivre chez lui ',
+                'En Famille' => 'Vivre avec lui',
+                'Etablissement spécialisé' => 'Le placer dans un établissement',
+            ],
+            'label' => 'Mode de vie actuel',
+        ])
+        ->add('suivant', SubmitType::class, [
+            'attr' => [
+                'class' => 'btn btn-info'
+            ],
+        ])
+        ->getForm();
 
         $form->handleRequest($request);
 
