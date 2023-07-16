@@ -42,7 +42,7 @@ class HomeController extends AbstractController
                  'label' => 'Maladie(si existante)',
              ])
              ->add('age_maladie', TextType::class, [
-                 'label' => '(Faculatatif)',
+                 'label' => 'Age maladie',
              ])
              ->add('quel_age', TextType::class, [
                  'label' => 'Votre age',
@@ -97,7 +97,7 @@ class HomeController extends AbstractController
             'label' => 'Maladie(si existante)',
         ])
         ->add('age_maladie', TextType::class, [
-            'label' => '(Faculatatif)',
+            'label' => 'Age maladie',
         ])
         ->add('quel_age', TextType::class, [
             'label' => 'Votre age',
