@@ -11,22 +11,13 @@
 						<span class="visually-hidden">(current)</span>
 					</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Prise de rendez-vous</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Test de personnalité</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">A propos</a>
-				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Espace membre</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Espace personnel</a>
-						<a class="dropdown-item" href="#">Espace professionnel</a>
+						<a class="dropdown-item" href="{{ url('app_login') }}">Déjà membre ?</a>
+						<a class="dropdown-item" href="{{ url('app_register') }}">Inscription</a>
 					</div>
 				</li>
 			</ul>
