@@ -1,57 +1,98 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vocasant - Accueil
-{% endblock %}
-
-
 {% block content %}
-	<div class="index d-flex align-items-center justify-content-center vh-100">
-		<div class="text-center p-3">
-			<div class="mb-5 pb-5">
-				<a href="{{ url('home_index') }}" class="gap-2 text-white text-center">
-					<div class="rounded-pill bg-white p-3 d-inline-block mb-4">
-						<img src="img/logo.png" alt="" class="img-fluid logo">
-					</div>
-					<h1 class="mb-0 text-black">VocaSant</h1>
-					{% if not app.user %}
-						<p class="lead text-black">
-							VocaSant marque une étape importante dans le domaine de la santé, en offrant une approche novatrice pour évaluer les capacités individuelles et permettre aux utilisateurs de mieux comprendre leur niveau d'autonomie et d'ouvrir un ticket pour bénéficier des services de création de demande en ligne.
-						</p>
-						<a href="#introduction" class="btn btn-warning">
-							<small>Ouvrir un ticket</small>
-						</a>
-					{% else %}
-						<a href="{{ path('home_exercices', {'id': app.user.id })}}" class="btn btn-info">
-							<small>Compléter mon dossier</small>
-						</a>
-					{% endif %}
-					<p></p>
-				</a>
-			</div>
-		</div>
-	</div>
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <div class="jumbotron text-center bg-primary text-white p-5 rounded">
+        <h1 class="display-4">Bienvenue sur Vocasant</h1>
+        <p class="lead">Votre partenaire de confiance pour l'évaluation de vos capacités intellectuelles et émotionnelles.</p>
+        <a href="{{ path('hpi_evaluation') }}" class="btn btn-light btn-lg mt-3">Commencez votre Évaluation</a>
+    </div>
 
-	<main class="px-5" id="introduction">
-		<h1 class="text-body-emphasis">Démarrer avec Vocasant</h1>
-		<p class="fs-5 col-md-8">VocaSant utilise des études médicales pour évaluer et suivre l'autonomie des individus, offrant ainsi des informations précieuses pour le suivi médical et l'amélioration de la qualité de vie.</p>
+    <!-- Nos Objectifs Section -->
+    <section class="mt-5">
+        <h2 class="text-center text-primary mb-4">Nos Objectifs</h2>
+        <p class="lead text-center text-muted mb-5">Nous vous proposons un outil fiable, conçu pour évaluer et comprendre vos aptitudes intellectuelles et émotionnelles, tout en soutenant les professionnels de la santé dans leurs évaluations.</p>
 
-		<div class="mb-5">
-			{% if not app.user %}
-				<a href="{{ path('app_register')}}" class="btn btn-primary btn-lg px-4 gap-3">Inscription</a>
-				<a href="{{ path('app_login')}}" class="btn btn-secondary btn-lg px-4 gap-3">Connexion</a>
-			{% else %}
-				<p>vous êtes bien connecté sous
-					{{ app.user.email }}</p>
-			{% endif %}
-		</div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4 shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><i class="bi bi-check-circle-fill"></i> Précision et Fiabilité</h5>
+                        <p class="card-text">Nous utilisons des critères scientifiquement validés pour vous fournir une évaluation précise de vos capacités. Chaque test est conçu pour être rigoureux et pertinent, garantissant des résultats fiables.</p>
+                    </div>
+                </div>
+            </div>
 
-		<hr class="col-3 col-md-2 mb-5">
+            <div class="col-md-6">
+                <div class="card mb-4 shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><i class="bi bi-briefcase-fill"></i> Soutien aux Professionnels</h5>
+                        <p class="card-text">Nos outils facilitent le travail des professionnels de la santé en leur fournissant des évaluations complètes et des données cliniques exploitables pour un suivi personnalisé de leurs patients.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="row g-5">
-			<div class="col-md-6">
-				<h2 class="text-body-emphasis">Projets de démarrage</h2>
-				<p>Mon objectif est de fournir aux individus un moyen fiable et facile de mesurer leurs taux d'invalités en ligne, tout en offrant aux professionnels de la santé des outils efficaces pour évaluer la demande de leurs patients..</p>
-			</div>
-		</div>
-	</main>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4 shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><i class="bi bi-universal-access-circle-fill"></i> Accessibilité pour Tous</h5>
+                        <p class="card-text">Notre mission est de rendre l'évaluation des capacités intellectuelles et émotionnelles accessible à tous. Nous offrons des outils conviviaux et adaptés à tous les utilisateurs, professionnels ou particuliers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><i class="bi bi-people-fill"></i> Communauté et Confiance</h5>
+                        <p class="card-text">Rejoignez une communauté de professionnels et d'utilisateurs qui nous font confiance pour les accompagner dans l'évaluation et l'amélioration de leur bien-être intellectuel et émotionnel.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="mt-5">
+        <h2 class="text-center text-primary mb-4">Ce que disent nos utilisateurs</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>"Vocasant m'a permis de mieux comprendre mes capacités et d'agir en conséquence."</p>
+                            <footer class="blockquote-footer">Marie Dupont, <cite title="Source Title">Utilisateur</cite></footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>"Une aide précieuse pour mes consultations. Je recommande."</p>
+                            <footer class="blockquote-footer">Dr. Jean Martin, <cite title="Source Title">Psychiatre</cite></footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>"Simple, efficace et accessible. Vocasant est un outil incontournable."</p>
+                            <footer class="blockquote-footer">Lucas Fournier, <cite title="Source Title">Coach en développement personnel</cite></footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
 {% endblock %}

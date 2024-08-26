@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-5">Questionnaire de Dépistage du Haut Potentiel Intellectuel</h1>
+    <p class="lead text-muted text-center mb-5">Veuillez répondre aux questions suivantes pour évaluer votre profil HPI.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-5">
+                    {{ form_start(evaluationForm) }}
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.age, 'Quel âge avez-vous ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.age, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                        {{ form_errors(evaluationForm.age) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.feeling_different, 'Vous sentez-vous différent(e) des autres ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.feeling_different, {'attr': {'class': 'form-check-inline'}}) }}
+                        {{ form_errors(evaluationForm.feeling_different) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.different_way, 'De quelle façon ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.different_way, {'attr': {'class': 'form-check-inline'}}) }}
+                        {{ form_errors(evaluationForm.different_way) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.always_felt_this_way, 'Est-ce que ça a toujours été le cas ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.always_felt_this_way, {'attr': {'class': 'form-check-inline'}}) }}
+                        {{ form_errors(evaluationForm.always_felt_this_way) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.sensitivity, 'Vous décririez-vous comme une personne très sensible ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.sensitivity, {'attr': {'class': 'form-select form-select-lg'}}) }}
+                        {{ form_errors(evaluationForm.sensitivity) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.strong_emotions, 'Certaines situations vous font-elles ressentir des émotions fortes ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.strong_emotions, {'attr': {'class': 'form-select form-select-lg'}}) }}
+                        {{ form_errors(evaluationForm.strong_emotions) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.injustice_sensitivity, 'Êtes-vous sensible aux injustices ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.injustice_sensitivity, {'attr': {'class': 'form-select form-select-lg'}}) }}
+                        {{ form_errors(evaluationForm.injustice_sensitivity) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.empathy, 'Êtes-vous empathique ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.empathy, {'attr': {'class': 'form-select form-select-lg'}}) }}
+                        {{ form_errors(evaluationForm.empathy) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.perfectionism, 'Vous décririez-vous comme une personne perfectionniste ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.perfectionism, {'attr': {'class': 'form-check-inline'}}) }}
+                        {{ form_errors(evaluationForm.perfectionism) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.curiosity, 'Vous décririez-vous comme une personne curieuse ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.curiosity, {'attr': {'class': 'form-check-inline'}}) }}
+                        {{ form_errors(evaluationForm.curiosity) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.boredom, 'Vous ennuyez-vous facilement ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.boredom, {'attr': {'class': 'form-check-inline'}}) }}
+                        {{ form_errors(evaluationForm.boredom) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.thought_process, 'Avez-vous l\'impression de réfléchir beaucoup ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.thought_process, {'attr': {'class': 'form-select form-select-lg'}}) }}
+                        {{ form_errors(evaluationForm.thought_process) }}
+                    </div>
+
+                    <div class="form-group mb-4">
+                        {{ form_label(evaluationForm.thought_pattern, 'Est-ce que vos pensées partent un peu dans tous les sens ?', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(evaluationForm.thought_pattern, {'attr': {'class': 'form-select form-select-lg'}}) }}
+                        {{ form_errors(evaluationForm.thought_pattern) }}
+                    </div>
+
+                    <div class="text-center mt-5">
+                        {{ form_widget(evaluationForm.submit, {'attr': {'class': 'btn btn-primary btn-lg px-5'}}) }}
+                    </div>
+
+                    {{ form_end(evaluationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

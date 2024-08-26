@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Gestion des Professionnels</h1>
+
+    <a href="{{ path('admin_professionnel_new') }}" class="btn btn-primary mb-3">Ajouter un nouveau professionnel</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Spécialité</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for professionnel in professionnels %}
+            <tr>
+                <td>{{ professionnel.nom }}</td>
+                <td>{{ professionnel.specialite }}</td>
+                <td>{{ professionnel.email }}</td>
+                <td>{{ professionnel.telephone }}</td>
+                <td>
+                    <a href="{{ path('admin_professionnel_edit', {'id': professionnel.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="{{ path('admin_professionnel_delete', {'id': professionnel.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce professionnel ?');">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

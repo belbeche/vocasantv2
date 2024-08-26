@@ -3,144 +3,148 @@
 namespace App\Controller\Front;
 
 use App\Entity\Exo;
+use App\Entity\User;
+use App\Form\HPIQuestionnaireFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', 'home_index', methods: ['GET'])]
-    public function index()
+    private MailerInterface $mailer;
+
+    public function __construct(MailerInterface $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
+    #[Route('/', name: 'home_index', methods: ['GET'])]
+    public function index(): Response
     {
         return $this->render('front/Accueil/home.html.twig');
     }
-
-    #[Route('/nouveau/{id}', 'home_statistiques', methods: ['GET','POST'])]
-     public function getNew(Request $request, EntityManagerInterface $entityManager, $id)
-     {
-         $lists_question = $entityManager->getRepository(Exo::class)->find($id);
- 
-         $lists_question->setCreatedAt(new \DateTimeImmutable());
- 
-         $form = $this->createFormBuilder($lists_question)
-             ->add('nom', TextType::class)
-             ->add('prenom', TextType::class)
-             ->add('niveau', ChoiceType::class, [
-                 'choices' => [
-                     'Enormement' => '20',
-                     'Beaucoup' => '40',
-                     'De temps en temps' => '60',
-                     'Pas du tout' => '80'
-                 ],
-                 'label' => 'Pour vous est-ce difficile de vivre quotidiennement ?',
-             ])
-             ->add('pathologie', TextType::class, [
-                 'label' => 'Maladie(si existante)',
-             ])
-             ->add('age_maladie', TextType::class, [
-                 'label' => 'Age maladie',
-             ])
-             ->add('quel_age', TextType::class, [
-                 'label' => 'Votre age',
-             ])
-             ->add('vivre_quatidien', ChoiceType::class, [
-                 'choices' => [
-                     'Seul' => 'Laisser seul le malade vivre chez lui ',
-                     'En Famille' => 'Vivre avec lui',
-                     'Etablissement spécialisé' => 'Le placer dans un établissement',
-                 ],
-                 'label' => 'Comment vivez-vous ?',
-             ])
-             ->add('suivant', SubmitType::class, [
-                 'attr' => [
-                     'class' => 'btn btn-info'
-                 ],
-             ])
-             ->getForm();
- 
-         $form->handleRequest($request);
- 
-         if ($form->isSubmitted() && $form->isValid()) {
-             $entityManager->flush();
- 
-             return $this->redirectToRoute('home_exercices', ['id' => $lists_question->getId()]);
-         }
-         return $this->render("front/Qcm/new.html.twig", [
-             'lists_question' => $form->createView(),
-         ]);
-     }
-
-    #[Route('/modifier/{id}', 'home_statistique_edit', methods: ['GET','POST'])]
-    public function getEdit($id, Request $request, EntityManagerInterface $entityManager)
+    
+    #[Route('/hpi-evaluation', name: 'hpi_evaluation', methods: ['GET', 'POST'])]
+    public function evaluate(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $lists_question = $entityManager->getRepository(Exo::class)->find($id);
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
 
-        $lists_question->setCreatedAt(new \DateTimeImmutable());
+        $exoUser = $entityManager->getRepository(Exo::class)->findOneBy(['user' => $user]);
 
-        $form = $this->createFormBuilder($lists_question)
-        ->add('nom', TextType::class)
-        ->add('prenom', TextType::class)
-        ->add('niveau', ChoiceType::class, [
-            'choices' => [
-                'Enormement' => '20',
-                'Beaucoup' => '40',
-                'De temps en temps' => '60',
-                'Pas du tout' => '80'
-            ],
-            'label' => 'Pour vous est-ce difficile de vivre quotidiennement ?',
-        ])
-        ->add('pathologie', TextType::class, [
-            'label' => 'Maladie(si existante)',
-        ])
-        ->add('age_maladie', TextType::class, [
-            'label' => 'Age maladie',
-        ])
-        ->add('quel_age', TextType::class, [
-            'label' => 'Votre age',
-        ])
-        ->add('vivre_quatidien', ChoiceType::class, [
-            'choices' => [
-                'Seul' => 'Laisser seul le malade vivre chez lui ',
-                'En Famille' => 'Vivre avec lui',
-                'Etablissement spécialisé' => 'Le placer dans un établissement',
-            ],
-            'label' => 'Mode de vie actuel',
-        ])
-        ->add('suivant', SubmitType::class, [
-            'attr' => [
-                'class' => 'btn btn-info'
-            ],
-        ])
-        ->getForm();
+        if ($exoUser) {
+            return $this->redirectToRoute('user_stats', ['id' => $exoUser->getId()]);
+        }
 
+        $form = $this->createForm(HPIQuestionnaireFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $exo = new Exo();
+            $exo->setUser($user);
+            $exo->setTypeHpi($this->determineTypeHPI($data));
+            $exo->setAutonomyLevel($this->calculateAutonomyLevel($data));
+            $exo->setCreatedAt(new \DateTime());
+
+            // Enregistrement des autres champs du formulaire
+            $exo->setQuelAge($data['age']);
+            $exo->setPathologie($data['pathologie'] ?? null);
+            $exo->setAgeMaladie($data['age_maladie'] ?? null);
+            $exo->setVivreQuotidien($data['vivre_quotidien'] ?? null);
+            $exo->setDifficultes($data['difficultes'] ?? null);
+
+            $entityManager->persist($exo);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home_exercices', ['id' => $lists_question->getId()]);
+            return $this->redirectToRoute('user_stats', ['id' => $exo->getId()]);
         }
-        return $this->render("front/Qcm/edit.html.twig", [
-            'edit_users' => $form->createView(),
+
+        return $this->render('front/evaluation/form.html.twig', [
+            'evaluationForm' => $form->createView(),
         ]);
     }
-    /**
-    * Espace membre utilisateur
-    */
-    #[Route('/exercice/{id}', 'home_exercices', methods: ['GET'])]
-    public function getWork(Request $request,EntityManagerInterface $entityManager, $id)
+
+    private function determineTypeHPI(array $data): string
     {
+        if ($data['sensitivity'] === 'extremely_sensitive' && !empty($data['thought_pattern'])) {
+            return 'HPE (Haut Potentiel Émotionnel)';
+        }
 
-        $users_stats = $entityManager
-            ->getRepository(Exo::class)
-            ->find($id);
+        if ($data['curiosity'] === 'yes' && !empty($data['thought_process'])) {
+            return 'HPI (Haut Potentiel Intellectuel)';
+        }
 
-        return $this->render('front/Qcm/index.html.twig', [
-            'users_stats' => $users_stats,
+        return 'Inconnu';
+    }
+
+    private function calculateAutonomyLevel(array $data): int
+    {
+        $score = 0;
+
+        if (isset($data['perfectionism']) && $data['perfectionism'] === 'yes') {
+            $score += 20;
+        }
+
+        if (isset($data['curiosity']) && $data['curiosity'] === 'yes') {
+            $score += 20;
+        }
+
+        if (isset($data['difficultes'])) {
+            switch ($data['difficultes']) {
+                case 'Énormément':
+                    $score -= 20;
+                    break;
+                case 'Beaucoup':
+                    $score -= 10;
+                    break;
+                case 'De temps en temps':
+                    $score += 0;
+                    break;
+                case 'Pas du tout':
+                    $score += 10;
+                    break;
+            }
+        }
+
+        return min(100, max(0, $score)); // Assure que le score est entre 0 et 100.
+    }
+
+
+    private function sendEmailToSpecialist(User $user, Exo $exo): void
+    {
+        $email = (new TemplatedEmail())
+            ->from(new Address('contact@scriptzenit.fr', 'HPI Diagnostic'))
+            ->to('specialist@example.com')
+            ->subject('Nouvelle demande d\'évaluation HPI/HPE/HPC')
+            ->htmlTemplate('front/emails/specialist_notification.html.twig')
+            ->context([
+                'user' => $user,
+                'type_hpi' => $exo->getTypeHpi(),
+                'autonomy_level' => $exo->getAutonomyLevel(),
+            ]);
+
+        $this->mailer->send($email);
+    }
+
+    #[Route('/user-stats/{id}', name: 'user_stats')]
+    public function userStats(string $id, EntityManagerInterface $entityManager): Response
+    {
+        $userStats = $entityManager->getRepository(Exo::class)->find($id);
+        if (!$userStats) {
+            throw $this->createNotFoundException('Les statistiques de l\'utilisateur n\'ont pas été trouvées.');
+        }
+
+        return $this->render('front/qcm/index.html.twig', [
+            'users_stats' => $userStats,
         ]);
     }
 }

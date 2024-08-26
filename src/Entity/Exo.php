@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ExoRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -17,38 +15,42 @@ class Exo
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private ?Uuid $id;
+    private ?Uuid $id = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'exoUsers')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTime $createdAt = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $niveau = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $prenom = null;
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $autonomyLevel = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pathologie = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $age_maladie = null;
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $ageMaladie = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $quelAge = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $vivre_quatidien = null;
+    private ?string $typeHpi = null;
 
-    #[ORM\OneToMany(mappedBy: 'exoUsers', targetEntity: User::class, cascade: ['persist'])]
-    private Collection $userLists;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $difficultes = null;
 
-    #[ORM\Column(type: 'bigint', nullable: true)]
-    private ?string $quel_age = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $autonomie = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $vivreQuotidien = null;
 
     public function __construct()
     {
-        $this->userLists = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?Uuid
@@ -56,50 +58,38 @@ class Exo
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getNiveau(): ?int
+    public function getAutonomyLevel(): ?int
     {
-        return $this->niveau;
+        return $this->autonomyLevel;
     }
 
-    public function setNiveau(int $niveau): static
+    public function setAutonomyLevel(?int $autonomyLevel): self
     {
-        $this->niveau = $niveau;
-
-        return $this;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): static
-    {
-        $this->prenom = $prenom;
+        $this->autonomyLevel = $autonomyLevel;
 
         return $this;
     }
@@ -109,75 +99,81 @@ class Exo
         return $this->pathologie;
     }
 
-    public function setPathologie(string $pathologie): static
+    public function setPathologie(?string $pathologie): self
     {
         $this->pathologie = $pathologie;
 
         return $this;
     }
 
-    public function getAgeMaladie(): ?string
+    public function getAgeMaladie(): ?int
     {
-        return $this->age_maladie;
+        return $this->ageMaladie;
     }
 
-    public function setAgeMaladie(string $age_maladie): static
+    public function setAgeMaladie(?int $ageMaladie): self
     {
-        $this->age_maladie = $age_maladie;
+        $this->ageMaladie = $ageMaladie;
 
         return $this;
     }
 
-    public function getVivreQuatidien(): ?string
+    public function getQuelAge(): ?int
     {
-        return $this->vivre_quatidien;
+        return $this->quelAge;
     }
 
-    public function setVivreQuatidien(?string $vivre_quatidien): static
+    public function setQuelAge(?int $quelAge): self
     {
-        $this->vivre_quatidien = $vivre_quatidien;
+        $this->quelAge = $quelAge;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserLists(): Collection
+    public function getTypeHpi(): ?string
     {
-        return $this->userLists;
+        return $this->typeHpi;
     }
 
-    public function addUserList(User $userList): static
+    public function setTypeHpi(?string $typeHpi): self
     {
-        if (!$this->userLists->contains($userList)) {
-            $this->userLists->add($userList);
-            $userList->setExoUsers($this);
-        }
+        $this->typeHpi = $typeHpi;
 
         return $this;
     }
 
-    public function removeUserList(User $userList): static
+    public function getDifficultes(): ?string
     {
-        if ($this->userLists->removeElement($userList)) {
-            // set the owning side to null (unless already changed)
-            if ($userList->getExoUsers() === $this) {
-                $userList->setExoUsers(null);
-            }
-        }
+        return $this->difficultes;
+    }
+
+    public function setDifficultes(?string $difficultes): self
+    {
+        $this->difficultes = $difficultes;
 
         return $this;
     }
 
-    public function getQuelAge(): ?string
+    public function getAutonomie(): ?string
     {
-        return $this->quel_age;
+        return $this->autonomie;
     }
 
-    public function setQuelAge(?string $quel_age): static
+    public function setAutonomie(?string $autonomie): self
     {
-        $this->quel_age = $quel_age;
+        $this->autonomie = $autonomie;
+
+        return $this;
+    }
+
+    public function getVivreQuotidien(): ?string
+    {
+        return $this->vivreQuotidien;
+    }
+
+    public function setVivreQuotidien(?string $vivreQuotidien): self
+    {
+        $this->vivreQuotidien = $vivreQuotidien;
 
         return $this;
     }

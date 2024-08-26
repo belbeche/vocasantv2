@@ -1,39 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription
-{% endblock %}
+{% block title %}Inscription | Vocasant{% endblock %}
 
 {% block content %}
-	{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
-	<img class="d-block mx-auto mb-4" src="{{ asset('img/hospital.svg')}}" alt="" width="72" height="57">
-	<div class="container">
-		{% for flash_error in app.flashes('verify_email_error') %}
-			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-		{% endfor %}
+    {% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="text-center">
+                        <img class="mb-3 text-white" src="{{ asset('img/hospital.svg')}}" alt="Logo Vocasant" width="72" height="72">
+                        <h2>Rejoignez Vocasant</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        {% for flash_error in app.flashes('verify_email_error') %}
+                            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                        {% endfor %}
 
-		<h1 class="display-5 fw-bold text-body-emphasis">Félicitations ! Vous êtes sur le point d'entamer votre parcours vers une meilleure autonomie.</h1>
-		<p class="text-body-emphasis">
-			N'attendez plus, inscrivez-vous dès maintenant et laissez Vocasant vous guider vers une meilleure qualité de vie et une plus grande indépendance.
-		</p>
-		{{ form_errors(registrationForm) }}
+                        <h3 class="text-center mb-4">Commencez votre parcours vers une meilleure autonomie</h3>
+                        <p class="mb-4 text-muted text-center">
+                            Inscrivez-vous dès maintenant pour découvrir comment Vocasant peut vous aider à améliorer votre qualité de vie et à gagner en indépendance.
+                        </p>
 
-		{{ form_start(registrationForm) }}
-		{{ form_row(registrationForm.email, {
-			label: 'Inscrivez votre email personnel'
-	}) }}
-		<p>
-			Votre email doit être valide.
-		</p>
-		{{ form_row(registrationForm.plainPassword, {
-            label: 'Mot de passe pour l\'application'
-        }) }}
-		<p>
-			Votre mot de passe doit contenir 6 caractères au minimum. 
-		</p>
-	{{ form_row(registrationForm.agreeTerms, {
-      label: 'En vous inscrivant, vous acceptez nos conditions d\'utilisations du produit.'}) }}
+                        {{ form_start(registrationForm) }}
 
-		<button type="submit" class="btn">Etape suivante</button>
-		{{ form_end(registrationForm) }}
-	</div>
+                        <div class="form-group">
+                            {{ form_row(registrationForm.nom, {
+                                label: 'Votre Nom'
+                            }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_row(registrationForm.prenom, {
+                                label: 'Votre Prénom'
+                            }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_row(registrationForm.telephone, {
+                                label: 'Votre Téléphone'
+                            }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_row(registrationForm.adressePostale, {
+                                label: 'Votre Adresse Postale'
+                            }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_row(registrationForm.email, {
+                                label: 'Adresse Email'
+                            }) }}
+                            <small class="form-text text-muted">Veuillez entrer une adresse email valide pour recevoir les notifications importantes.</small>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_row(registrationForm.plainPassword, {
+                                label: 'Mot de Passe'
+                            }) }}
+                            <small class="form-text text-muted">Votre mot de passe doit contenir au moins 6 caractères.</small>
+                        </div>
+
+                        <div class="form-group form-check">
+                            {{ form_row(registrationForm.agreeTerms, {
+                                label: 'En vous inscrivant, vous acceptez nos conditions d\'utilisation'
+                            }) }}
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg mt-3">S'inscrire et Continuer</button>
+                        </div>
+
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

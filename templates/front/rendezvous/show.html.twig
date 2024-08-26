@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-5">Détails du Rendez-vous</h1>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-5">
+            <h2 class="card-title">{{ rendezVous.professionnel.nom }} {{ rendezVous.professionnel.prenom }}</h2>
+            <p class="card-text">
+                <strong>Spécialité:</strong> {{ rendezVous.professionnel.specialite }}<br>
+                <strong>Date et Heure:</strong> {{ rendezVous.dateHeure|date('d/m/Y H:i') }}<br>
+                <strong>Email:</strong> {{ rendezVous.professionnel.email }}<br>
+                <strong>Téléphone:</strong> {{ rendezVous.professionnel.telephone }}
+            </p>
+
+            <div class="text-center mt-4">
+                <div class="text-center mt-4">
+                    <a href="{{ path('rendezvous_index') }}" class="btn btn-secondary">Retour à la liste des rendez-vous</a>
+                    <a href="{{ path('rendezvous_edit', {'id': rendezVous.id}) }}" class="btn btn-primary">Modifier le rendez-vous</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,16 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -26,17 +28,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private bool $isVerified = false;
 
-    #[ORM\ManyToOne(inversedBy: 'userLists', cascade:['persist'])]
-    private ?Exo $exo_users = null;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Exo::class, cascade: ['persist'], orphanRemoval: true)]
+    private Collection $exoUsers;
+
+    #[ORM\Column(length: 100)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $prenom = null;
+
+    #[ORM\Column(length: 15, nullable: true)]
+    private ?string $telephone = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adressePostale = null;
+
+    public function __construct()
+    {
+        $this->exoUsers = new ArrayCollection();
+    }
 
     public function getId(): ?Uuid
     {
@@ -55,23 +71,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -84,9 +91,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -99,12 +103,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // Si vous stockez des données sensibles temporaires, effacez-les ici
         // $this->plainPassword = null;
     }
 
@@ -120,14 +121,77 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getExoUsers(): ?Exo
+    public function getNom(): ?string
     {
-        return $this->exo_users;
+        return $this->nom;
     }
 
-    public function setExoUsers(?Exo $exo_users): static
+    public function setNom(string $nom): static
     {
-        $this->exo_users = $exo_users;
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getAdressePostale(): ?string
+    {
+        return $this->adressePostale;
+    }
+
+    public function setAdressePostale(?string $adressePostale): static
+    {
+        $this->adressePostale = $adressePostale;
+
+        return $this;
+    }
+
+    public function getExoUsers(): Collection
+    {
+        return $this->exoUsers;
+    }
+
+    public function addExoUser(Exo $exo): static
+    {
+        if (!$this->exoUsers->contains($exo)) {
+            $this->exoUsers[] = $exo;
+            $exo->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExoUser(Exo $exo): static
+    {
+        if ($this->exoUsers->removeElement($exo)) {
+            // set the owning side to null (unless already changed)
+            if ($exo->getUser() === $this) {
+                $exo->setUser(null);
+            }
+        }
 
         return $this;
     }

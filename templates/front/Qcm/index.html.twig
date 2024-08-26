@@ -1,70 +1,73 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-	<div class="jumbotron">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-1">
-					<h1 class="display-6">Alertes et évenements
-					</h1>
-					<div class="alert alert-info alert-dismissible fade show" role="alert">
-						<strong>Autonome à  :
-						</strong>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="text-white">Résultats de votre Évaluation</h2>
+                </div>
+                <div class="card-body p-5">
+                    <!-- Informations Personnelles -->
+                    <div class="mb-4">
+                        <h5><i class="bi bi-person-fill"></i> Informations Personnelles</h5>
+                        <p><strong>Nom :</strong> {{ users_stats.user.nom }}</p>
+                        <p><strong>Prénom :</strong> {{ users_stats.user.prenom }}</p>
+                        <p><strong>Âge :</strong> {{ users_stats.quelAge }}</p>
+                    </div>
 
-						{{ users_stats.niveau }}%
-						<strong>
-							<a href="{{ path('home_statistique_edit', {id:users_stats.id}) }}">
-								Modifier
-							</a>
-						</strong>
-						<button aria-label="Close" class="close" data-dismiss="alert" type="button">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<br>
-					<span>
-						Nom :
-						{{ users_stats.nom}}
-					</span><br>
-					<span>
-						Prenom:
-						{{ users_stats.prenom}}
-					</span><br>
-					<span>
-						Pathologie:
-						{{ users_stats.pathologie}}</span><br>
-					<span>
-						Age maladie :
-						{{ users_stats.agemaladie}}</span><br>
-					<span>
-						Age :
-						{{ users_stats.quelage}}</span><br>
-					<hr>
-				</div>
-			</div>
-			<div class="col-xs-1 form-group">
-				<h1>Degré d'autonomie</h1><br>
-				{% if users_stats.niveau <= 20 %}
-					<span>Niveau 1 : la personne ne respecte pas les consignes, elle commence plusieurs choses , les laisse en plan , ne clôture pas.</span>
-				{% elseif users_stats.niveau < 41 %}
-					<span>Niveau 2 : La personne s'arrête de travailler , quand il lui manque quelques chose , et attend qu'on lui fournisse, a besoin de consignes extrênement précises, et il faut le contrôler pour vérifier la conformité de ses actions.</span>
-				{% elseif users_stats.niveau < 61 %}
-					<span>Niveau 3 : La personne prend l'initiave de soliciter de l'aide en cas de besoin. Résout seul les difficultés ou les anomalies déjà rencontrées, traite intégralement sans aide les situations ordinaire et en assume les variations.</span>
-				{% elseif users_stats.niveau < 81 %}
-					<span>Niveau 4 : La personne génère les ressources dont elle a besoin. Elle construit des solutions, trouve les moyens nécessaires à la résolution de problèmes exceptionnels, elle assure simultanément la conduite et la conclusion de plusieurs opérations.
-					</span>
-				{% endif %}<br>
-				<span><br/><strong>
-						Lieu de résidence préferable
-					</strong>
-					:
-					{{ users_stats.vivrequatidien }}
-				</span><br><hr>
-				<h1 class="text-center">
-					<strong>APPLICATION EN CONSTRUCTION</strong>
-				</h1>
-				<p>Sur cette page, vous pouvez configurer des alertes et des événements en fonction de votre degré d'autonomie. Ces alertes vous aideront à anticiper les situations et à demander de l'aide si nécessaire.</p>
-			</div>
-		</div>
-	</div>
+                    <!-- Type de Haut Potentiel -->
+                    <div class="mb-4">
+                        <h5><i class="bi bi-lightbulb-fill"></i> Type de Haut Potentiel</h5>
+                        <div class="alert alert-success">
+                            <strong>Type HPI Identifié :</strong> {{ users_stats.typeHpi }}
+                        </div>
+                        <p>Selon vos réponses, il est probable que vous ayez un <strong>{{ users_stats.typeHpi }}</strong>. Ce résultat est indicatif et ne remplace pas une évaluation complète par un professionnel.</p>
+                    </div>
+
+                    <!-- Degré d'Autonomie -->
+                    <div class="mb-4">
+                        <h5><i class="bi bi-heart-pulse-fill"></i> Degré d'Autonomie</h5>
+                        <div class="alert alert-info">
+                            <strong>Autonome à :</strong> {{ users_stats.autonomyLevel }}%
+                        </div>
+                        {% if users_stats.autonomyLevel <= 20 %}
+                            <p><strong>Niveau 1 :</strong> Vous avez du mal à respecter les consignes et à terminer ce que vous commencez.</p>
+                        {% elseif users_stats.autonomyLevel < 41 %}
+                            <p><strong>Niveau 2 :</strong> Vous avez besoin d'instructions précises et d'un suivi pour accomplir vos tâches.</p>
+                        {% elseif users_stats.autonomyLevel < 61 %}
+                            <p><strong>Niveau 3 :</strong> Vous êtes capable de solliciter de l'aide en cas de besoin et de gérer les situations courantes.</p>
+                        {% elseif users_stats.autonomyLevel < 81 %}
+                            <p><strong>Niveau 4 :</strong> Vous êtes très autonome, capable de trouver des solutions et de gérer plusieurs tâches simultanément.</p>
+                        {% elseif users_stats.autonomyLevel <= 100 %}
+                            <p><strong>Niveau 5 :</strong> Vous êtes extrêmement autonome et capable de gérer des tâches complexes sans assistance.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Recommandations -->
+                    <div class="mb-4">
+                        <h5><i class="bi bi-clipboard-check-fill"></i> Recommandations</h5>
+                        <p>Nous vous conseillons de :</p>
+                        <ul>
+                            <li>Continuer à développer vos capacités en vous fixant des objectifs personnels et professionnels clairs.</li>
+                            <li>Envisager de consulter un professionnel pour une évaluation plus approfondie et un suivi personnalisé.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Contactez un Professionnel -->
+                    <div class="mb-4 text-center">
+                        <h5><i class="bi bi-telephone-fill"></i> Besoin d'un avis professionnel ?</h5>
+                        <p>Si vous souhaitez obtenir un avis plus approfondi ou discuter de vos résultats avec un professionnel, n'hésitez pas à prendre rendez-vous.</p>
+                        <a href="{{ path('rendezvous_new') }}" class="btn btn-primary btn-lg">Contacter un professionnel</a>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center">
+                    <p class="text-muted">Ce résultat est indicatif et ne constitue pas un diagnostic officiel. Pour une évaluation complète, veuillez consulter un professionnel.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

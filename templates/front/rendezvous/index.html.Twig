@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-5">Mes Rendez-vous</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="list-group">
+                {% for rendezVous in rendezVousForm %}
+                    <a href="{{ path('rendezvous_show', {'id': rendezVous.id}) }}" class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">{{ rendezVous.professionnel.prenom }} {{ rendezVous.professionnel.nom }}</h5>
+                        <p class="mb-1">{{ rendezVous.dateHeure|date('d/m/Y H:i') }}</p>
+                    </a>
+                {% else %}
+                    <p class="text-muted text-center">Vous n'avez aucun rendez-vous pour le moment.</p>
+                {% endfor %}
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('rendezvous_new') }}" class="btn btn-primary">Réserver un nouveau rendez-vous</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

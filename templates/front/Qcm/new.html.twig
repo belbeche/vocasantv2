@@ -1,52 +1,94 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-	{% form_theme lists_question 'bootstrap_5_layout.html.twig' %}
-	<div class="container">
-		<h1>
-			Indiquez vos informations
-		</h1><br>
-		<p>
-			Une fois tous les champs remplis, cliquez sur le bouton "Suivant" pour passer à l'étape suivante. Nous vous remercions de votre participation et nous nous engageons à vous fournir des recommandations personnalisées pour améliorer votre qualité de vie au quotidien.
-		</p>
-		<div class="Container px-2">
-			{{ form_start(lists_question, {'attr': {'novalidate': 'novalidate'}})}}
-			{{ form_label(lists_question.nom)}}
-			{{ form_widget(lists_question.nom)}}
-			{{ form_errors(lists_question.nom)}}
-			<p>
-				Veuillez saisir votre nom complet.
-			</p>
-			{{ form_row(lists_question.prenom)}}
-			<p>
-				Veuillez saisir votre prénom courant.
-			</p>
-			{{ form_row(lists_question.niveau)}}
-			<p>
-				Veuillez choisir parmis la liste votre niveau au quatidien.
-			</p>
-			{{ form_row(lists_question.pathologie)}}
-			<p>
-				Si on vous a reconnu une pathologie, inscrivez là ici
-			</p>
-			{{ form_row(lists_question.age_maladie)}}
-			<p>
-				A quel age la maladie à commencé
-			</p>
-			{{ form_row(lists_question.quel_age)}}
-			<p>
-				Votre age.
-			</p>
-			{{ form_row(lists_question.vivre_quatidien)}}
-			<p>
-				Veuillez choisir parmis la liste votre situation actuelle.
-			</p>
+    {% form_theme lists_question 'bootstrap_5_layout.html.twig' %}
+    <div class="container mt-5">
+        <h1>Indiquez vos informations</h1>
+        <p class="mb-4">
+            Une fois tous les champs remplis, cliquez sur le bouton "Suivant" pour passer à l'étape suivante. Merci de votre participation, nous vous fournirons des recommandations personnalisées pour améliorer votre qualité de vie au quotidien.
+        </p>
 
-			{{form_row(lists_question.suivant)}}
-			<p>
-				Ce bouton vous permettra de passer à l'étape suivante une fois que vous avez rempli les informations requises.
-			</p>
-			{{ form_end(lists_question)}}
-		</div>
-	</div>
+        <div class="px-2">
+            {{ form_start(lists_question, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            <div class="mb-3">
+                {{ form_row(lists_question.nom, {
+                    'label': 'Nom complet',
+                    'attr': {'aria-describedby': 'nomHelp'}
+                }) }}
+                <small id="nomHelp" class="form-text text-muted">
+                    Veuillez saisir votre nom complet.
+                </small>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(lists_question.prenom, {
+                    'label': 'Prénom courant',
+                    'attr': {'aria-describedby': 'prenomHelp'}
+                }) }}
+                <small id="prenomHelp" class="form-text text-muted">
+                    Veuillez saisir votre prénom courant.
+                </small>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(lists_question.type_hpi, {
+                    'label': 'Type de Haut Potentiel',
+                    'attr': {'aria-describedby': 'typeHpiHelp'}
+                }) }}
+                <small id="typeHpiHelp" class="form-text text-muted">
+                    Veuillez sélectionner votre type de Haut Potentiel.
+                </small>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(lists_question.difficultes, {
+                    'label': 'Difficulté à vivre quotidiennement',
+                    'attr': {'aria-describedby': 'difficultesHelp'}
+                }) }}
+                <small id="difficultesHelp" class="form-text text-muted">
+                    Veuillez indiquer votre difficulté à vivre au quotidien.
+                </small>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(lists_question.autonomie, {
+                    'label': 'Niveau d\'autonomie',
+                    'attr': {'aria-describedby': 'autonomieHelp'}
+                }) }}
+                <small id="autonomieHelp" class="form-text text-muted">
+                    Veuillez indiquer votre niveau d'autonomie.
+                </small>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(lists_question.vivre_quotidien, {
+                    'label': 'Situation actuelle',
+                    'attr': {'aria-describedby': 'vivreHelp'}
+                }) }}
+                <small id="vivreHelp" class="form-text text-muted">
+                    Veuillez choisir votre situation de vie actuelle parmi les options proposées.
+                </small>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(lists_question.pathologie, {
+                    'label': 'Pathologie (si existante)',
+                    'attr': {'aria-describedby': 'pathologieHelp'}
+                }) }}
+                <small id="pathologieHelp" class="form-text text-muted">
+                    Si vous avez une pathologie reconnue, veuillez l'inscrire ici.
+                </small>
+            </div>
+
+            <div class="mt-4">
+                {{ form_row(lists_question.submit) }}
+                <small class="form-text text-muted">
+                    Cliquez sur "Soumettre" pour envoyer vos informations.
+                </small>
+            </div>
+
+            {{ form_end(lists_question) }}
+        </div>
+    </div>
 {% endblock %}
