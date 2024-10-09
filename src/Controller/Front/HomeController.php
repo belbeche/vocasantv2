@@ -37,12 +37,16 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        // Debugging to check if $exoUser is correctly retrieved
         $exoUser = $entityManager->getRepository(Exo::class)->findOneBy(['user' => $user]);
-
+        
         if ($exoUser) {
+            // Optional: Add a logger or dump here to inspect the content of $exoUser
+            // dump($exoUser);
             return $this->redirectToRoute('user_stats', ['id' => $exoUser->getId()]);
         }
 
+        // Handle the form submission
         $form = $this->createForm(HPIQuestionnaireFormType::class);
         $form->handleRequest($request);
 
@@ -72,6 +76,8 @@ class HomeController extends AbstractController
             'evaluationForm' => $form->createView(),
         ]);
     }
+
+
 
     private function determineTypeHPI(array $data): string
     {
